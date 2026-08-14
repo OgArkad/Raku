@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Raku</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <header class="toolbar">
+        <div class="toolbar-brand"> 
+            <h1>RAKU (@Max_)</h1>
+        </div>
+        <div class="toolbar-group">
+            <label class="field">
+                <span>Speed</span>
+                <input type="range" id="speed" min="10" max="1000" value="150" step="10">
+            </label>
+        </div>
+        <div class="toolbar-group">
+            <label class="field">
+                <span>cols</span>
+                <input type="number" id="x" value="8">
+            </label>
+            <label class="field">
+                <span>rows</span>
+                <input type="number" id="y" value="8">
+            </label>
+            <button id="make" class="btn btn-primary">Make map</button>
+        </div>
+
+        <div class="toolbar-group">
+            <button id="buttonRaku" class="btn-icon" title="Place Raku" aria-label="Place Raku"></button>
+            <button id="eraseButton" class="btn btn-danger">Erase everything</button>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="panel">
+            <section id="stats-section" class="panel-card">
+                <h2>Statistics</h2>
+                <div class="stats-grid">
+                    <div>Maps Created: <strong id="statMapsCreated">0</strong></div>
+                    <div>Scripts Run: <strong id="statScriptsRun">0</strong></div>
+                    <div>Community Maps: <strong id="statCommunityMaps">0</strong></div>
+                </div>
+            </section>
+
+            <section id="news-section" class="panel-card">
+                <h2>Latest News</h2>
+                <div id="newsFeed" class="scrollable-list"></div>
+            </section>
+
+            <section id="leaderboard-section" class="panel-card">
+                <h2>Leaderboard</h2>
+                <div id="leaderboardList" class="scrollable-list"></div>
+            </section>
+
+            <section id="maps-section" class="panel-card">
+                <h2>Community Maps</h2>
+                <div id="communityMapsGallery" class="scrollable-list"></div>
+            </section>
+        </aside>
+
+        <main class="stage">
+            <div id="grid"></div>
+        </main>
+
+        <aside class="panel">
+            <section id="miscWindow" class="panel-card">
+                <h2>Misc. functions</h2>    
+                <div class="btn-stack">
+                    <button id="randomButton" class="btn btn-ghost">Random mode</button>
+                    <button id="whereIsRakuButton" class="btn btn-ghost">Where is Raku?</button>
+                    <button id="gameOfLife" class="btn btn-ghost">Game of life</button>
+                </div>
+            </section>
+            <section class="panel-card">
+                <h2>Code</h2>
+                <textarea id="codeInput" spellcheck="false" placeholder="forward(3)&#10;right()&#10;forward(1)"></textarea>
+                <div class="btn-row">
+                    <button id="startTheCodeButton" class="btn btn-primary">Start the code</button>
+                    <button id="exportButton" class="btn btn-outline">Export map</button>
+                </div>
+            </section>
+            <section id="tutorial" class="panel-card">
+                <h2>Commands</h2>
+                <p><code>forward(steps)</code></p>
+                <p><code>left()</code></p>
+                <p><code>right()</code></p>
+                <p><code>variable variableName = value (string/int)</code></p>
+                <p><code>for (i = 0; i < int; i++) {
+                <br>    code
+                <br>}</code></p>
+                <p><code>HowFarFromMe()</code></p>
+                <p><code>function(){}</code></p>
+                <p><code>place.red/green/blue()</code></p>
+                <p><code>rocks.red/green/blue(int)</code></p>
+            </section>
+        </aside>
+    </div>
+
+    <script type="text/javascript" src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+/* ---------------------------------------------
+   Tokens
+--------------------------------------------- */
+:root {
+    --bg: #12141a;
+    --panel: #1c1f26;
+    --panel-border: #2c313d;
+    --raised: #232733;
+
+    --text: #e7e5df;
+    --text-dim: #8b8f9a;
+
+    --accent: #39ff88;
+    --accent-dim: #1f8a4c;
+    --danger: #ff5a5a;
+    --danger-dim: #7a2a2a;
+
+    --font-mono: "JetBrains Mono", "Courier New", monospace;
+    --font-sans: "Inter", system-ui, sans-serif;
+
+    --radius: 10px;
+    --shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 15% 0%, rgba(57, 255, 136, 0.05), transparent 40%),
+        var(--bg);  
+    color: var(--text);
+    font-family: var(--font-sans);
+}
+
+/* ---------------------------------------------
+   Toolbar
+--------------------------------------------- */
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    padding: 16px 28px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--panel-border);
+}
+
+.toolbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: auto;
+}
+
+.toolbar-brand h1 {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    margin: 0;
+    color: var(--text);
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.field input {
+    width: 4.5rem;
+    padding: 6px 8px;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--raised);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+}
+
+.field input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+/* ---------------------------------------------
+   Buttons
+--------------------------------------------- */
+.btn {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #08130c;
+    box-shadow: 0 0 0 rgba(57, 255, 136, 0);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 0 16px rgba(57, 255, 136, 0.35);
+}
+
+.btn-danger {
+    background: transparent;
+    color: var(--danger);
+    border-color: var(--danger-dim);
+}
+
+.btn-danger:hover {
+    background: rgba(255, 90, 90, 0.1);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--amber);
+    border-color: var(--amber);
+}
+
+.btn-outline:hover {
+    background: rgba(255, 176, 32, 0.12);
+}
+
+.btn-ghost {
+    background: var(--raised);
+    color: var(--text);
+    border-color: var(--panel-border);
+    text-align: left;
+}
+
+.btn-ghost:hover {
+    border-color: var(--accent-dim);
+    color: var(--accent);
+}
+
+.btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 8px;
+    border: 1px solid var(--panel-border);
+    background-color: var(--raised);
+    background-image: url("sprites/Raku.svg");
+    background-size: 65%;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.btn-icon:hover {
+    border-color: var(--amber);
+}
+
+.btn-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+/* ---------------------------------------------
+   Layout
+--------------------------------------------- */
+.layout {
+    display: grid;
+    /* Left panel | Middle stage | Right panel */
+    grid-template-columns: 450px 1fr 450px; 
+    gap: 24px;
+    padding: 28px;
+    align-items: start;
+}
+
+.stage {
+    display: flex;
+    justify-content: center;
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.panel-card {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+}
+
+.panel-card h2 {
+    margin: 0 0 12px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+}
+
+/* ---------------------------------------------
+   Grid / control-panel frame (signature element)
+--------------------------------------------- */
+#grid {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: var(--cols, 8) / var(--rows, 8);
+
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 8), 1fr);
+    grid-template-rows: repeat(var(--rows, 8), 1fr);
+    gap: 0;
+
+    background-color: #000;
+    border: 10px solid var(--panel);
+    border-radius: 14px;
+    outline: 1px solid var(--panel-border);
+    box-shadow: var(--shadow);
+}
+
+#grid img {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    display: block !important;
+    object-fit: fill !important;
+    box-sizing: border-box;
+}
+
+#grid img.Raku {
+    background-color: #fff;
+}
+
+.border {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.deadCell {
+    background-color: #1a1c22;
+}
+
+.liveCell {
+    background-color: var(--accent);
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------------------------------------------
+   Code editor
+--------------------------------------------- */
+#codeInput {
+    width: 100%;
+    min-height: 120px;
+    padding: 10px 12px;
+    resize: vertical;
+    background-color: #0c0d10;
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    text-shadow: 0 0 6px rgba(57, 255, 136, 0.5);
+}
+
+#codeInput::placeholder {
+    color: var(--accent-dim);
+    text-shadow: none;
+}
+
+#codeInput:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+/* ---------------------------------------------
+   Tutorial
+--------------------------------------------- */
+#tutorial p {
+    margin: 0 0 8px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+}
+
+#tutorial code {
+    font-family: var(--font-mono);
+    color: var(--amber);
+    background: var(--raised);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* ---------------------------------------------
+   Responsive
+--------------------------------------------- */
+@media (max-width: 860px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .toolbar {
+        gap: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn {
+        transition: none;
+    }
+}
