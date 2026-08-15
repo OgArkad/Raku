@@ -43,6 +43,10 @@ You can play the classic version of Game of life! It was fully implemented, and 
 - HTML
 - CSS
 - vanilla JS
- 
 
- 
+---
+## Usage
+
+- Download the zip file of the project
+- Execute the zip file
+- Open the html file inside the directory in a browser(for example Firefox)
