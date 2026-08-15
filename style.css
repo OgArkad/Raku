@@ -173,7 +173,7 @@ body {
     border-radius: 8px;
     border: 1px solid var(--panel-border);
     background-color: var(--raised);
-    background-image: url("sprites/Raku.svg");
+    background-image: url("Raku.svg");
     background-size: 65%;
     background-position: center;
     background-repeat: no-repeat;
