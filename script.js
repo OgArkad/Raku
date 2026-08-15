@@ -77,9 +77,9 @@ const rockInventory = { red: 0, green: 0, blue: 0 };
 const rockMap = {};
 
 const rockSprites = {
-    red: "sprites/RedRock.svg",
-    green: "sprites/GreenRock.svg",
-    blue: "sprites/BlueRock.svg"
+    red: "RedRock.svg",
+    green: "GreenRock.svg",
+    blue: "BlueRock.svg"
 };
 
 //this is made for reset stats of rocks inside Raku's inventory
@@ -185,7 +185,7 @@ grid.addEventListener("click", function (e) {
             rakuPlaced = true;
             e.target.classList.remove("Empty");
             e.target.classList.add("Raku");
-            e.target.src = "sprites/Raku.svg";
+            e.target.src = "Raku.svg";
             rakuCoordinates = x + "," + y;
             mapMatrix[y][x] = 2;
             clickedStatus = "none";
@@ -194,14 +194,14 @@ grid.addEventListener("click", function (e) {
         if (e.target.classList.contains("Wall")) {
             clearRockAt(x, y);
             e.target.style.backgroundColor = "";
-            e.target.src = "sprites/Empty.svg";
+            e.target.src = "Empty.svg";
             e.target.classList.remove("Wall");
             e.target.classList.add("Empty");
             mapMatrix[y][x] = 0;
         } else if (e.target.classList.contains("Empty")) {
             clearRockAt(x, y);
             e.target.style.backgroundColor = "";
-            e.target.src = "sprites/Wall.svg";
+            e.target.src = "Wall.svg";
             e.target.classList.remove("Empty");
             e.target.classList.add("Wall");
             mapMatrix[y][x] = -1;
@@ -414,7 +414,7 @@ function eraseEveryting() {
                 let img = new Image();
                 img.draggable = false;
 
-                img.src = "sprites/Empty.svg";
+                img.src = "Empty.svg";
                 img.classList.add("Empty", "border");
 
                 row.push(0);
@@ -492,15 +492,15 @@ function buildGridFromMatrix(matrix) {
             let tileValue = matrix[y][x];
 
             if (tileValue === -1) {
-                img.src = "sprites/Wall.svg";
+                img.src = "Wall.svg";
                 img.classList.add("Wall");
             } else if (tileValue === 2) {
-                img.src = "sprites/Raku.svg";
+                img.src = "Raku.svg";
                 img.classList.add("Raku");
                 rakuPlaced = true;
                 rakuCoordinates = `${x},${y}`;
             } else {
-                img.src = "sprites/Empty.svg";
+                img.src = "Empty.svg";
                 img.classList.add("Empty");
             }
 
@@ -541,7 +541,7 @@ function mapCreate(targetX, targetY) {
             img.draggable = false;
             let oneOrZero = Math.random() > 0.5 ? 1 : 0;
 
-            img.src = oneOrZero === 1 ? "sprites/Wall.svg" : "sprites/Empty.svg";
+            img.src = oneOrZero === 1 ? "Wall.svg" : "Empty.svg";
             img.classList.add(oneOrZero === 1 ? "Wall" : "Empty");
 
             let tileValue = oneOrZero === 1 ? -1 : 0;
@@ -608,7 +608,7 @@ async function forward(steps) {
 
         newElement.classList.remove("Empty");
         newElement.classList.add("Raku");
-        newElement.src = "sprites/Raku.svg";
+        newElement.src = "Raku.svg";
         newElement.style.transform = `rotate(${rakuDirection * 90}deg)`;
 
         await delay(speed);
@@ -823,7 +823,7 @@ function renderTile(x, y) {
         cell.src = rockSprites[rock];
         cell.style.backgroundColor = "white";
     } else {
-        cell.src = "sprites/Empty.svg";
+        cell.src = "Empty.svg";
         cell.style.backgroundColor = "";
     }
 }
