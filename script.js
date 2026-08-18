@@ -26,6 +26,8 @@ let whereIsRakuButton = document.getElementById("whereIsRakuButton");
 let gameOfLife = document.getElementById("gameOfLife");
 //Start the Game of Life or the code for Raku
 let startTheCodeButton = document.getElementById("startTheCodeButton");
+//export the map as an image
+let exportImageButton = document.getElementById("exportImageButton");
 //Change speed
 let speedInput = document.getElementById("speed");
 let speed = parseInt(speedInput.value, 10);
@@ -222,6 +224,10 @@ grid.addEventListener("click", function (e) {
             mapMatrix[y][x] = 0;
         }
     }
+});
+
+exportImageButton.addEventListener("click", function () {
+    exportGridAsImage();
 });
 
 
@@ -1181,6 +1187,96 @@ async function loadStats() {
     if (mapCount !== null && document.getElementById('statCommunityMaps')) {
         document.getElementById('statCommunityMaps').textContent = mapCount;
     }
+}
+
+async function exportGridAsImage() {
+    let cols = parseInt(inputX.value) || 8;
+    let rows = parseInt(inputY.value) || 8;
+
+    const cellSize = 64; 
+    const canvas = document.createElement("canvas");
+    canvas.width = cols * cellSize;
+    canvas.height = rows * cellSize;
+    const ctx = canvas.getContext("2d");
+
+    const emptyImg = new Image(); emptyImg.src = "Empty.svg";
+    const wallImg = new Image(); wallImg.src = "Wall.svg";
+    const rakuImg = new Image(); rakuImg.src = "Raku.svg";
+    
+    const redRockImg = new Image(); redRockImg.src = "RedRock.svg";
+    const greenRockImg = new Image(); greenRockImg.src = "GreenRock.svg";
+    const blueRockImg = new Image(); blueRockImg.src = "BlueRock.svg";
+
+    const loadImage = (img) => new Promise((resolve) => {
+        img.onload = () => resolve();
+        img.onerror = () => {
+            console.warn(`Could not load image: ${img.src}`);
+            resolve(); 
+        };
+    });
+
+    await Promise.all([
+        loadImage(emptyImg),
+        loadImage(wallImg),
+        loadImage(rakuImg),
+        loadImage(redRockImg),
+        loadImage(greenRockImg),
+        loadImage(blueRockImg)
+    ]);
+
+    for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+            let px = x * cellSize;
+            let py = y * cellSize;
+
+            let cell = grid.querySelector(`img[data-x="${x}"][data-y="${y}"]`);
+            if (!cell) continue;
+
+            if (gameOfLiveActive) {
+                if (cell.classList.contains("liveCell")) {
+                    ctx.fillStyle = "#39ff88"; 
+                } else {
+                    ctx.fillStyle = "#1a1c22"; 
+                }
+                ctx.fillRect(px, py, cellSize, cellSize);
+            } 
+            else {
+                let rockColor = rockMap[`${x},${y}`]; 
+
+                if (cell.classList.contains("Wall")) {
+                    ctx.drawImage(wallImg, px, py, cellSize, cellSize);
+                } else if (cell.classList.contains("Raku")) {
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillRect(px, py, cellSize, cellSize);
+
+                    ctx.save();
+                    ctx.translate(px + cellSize / 2, py + cellSize / 2);
+                    ctx.rotate((rakuDirection * 90 * Math.PI) / 180);
+                    ctx.drawImage(rakuImg, -cellSize / 2, -cellSize / 2, cellSize, cellSize);
+                    ctx.restore();
+                } else if (rockColor) {
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillRect(px, py, cellSize, cellSize);
+                    if (rockColor === "red") ctx.drawImage(redRockImg, px, py, cellSize, cellSize);
+                    if (rockColor === "green") ctx.drawImage(greenRockImg, px, py, cellSize, cellSize);
+                    if (rockColor === "blue") ctx.drawImage(blueRockImg, px, py, cellSize, cellSize);
+                } else {
+                    ctx.drawImage(emptyImg, px, py, cellSize, cellSize);
+                }
+            }
+
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+            ctx.lineWidth = 1;
+            ctx.strokeRect(px, py, cellSize, cellSize);
+        }
+    }
+
+    const dataURL = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    const prefix = gameOfLiveActive ? "game-of-life" : "raku-map";
+    link.download = `${prefix}-${Date.now()}.png`;
+    link.href = dataURL;
+    link.click();
 }
 
 //Javascript injection measures
